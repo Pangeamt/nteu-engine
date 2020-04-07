@@ -1,0 +1,24 @@
+---
+engine:
+  srcLang: en
+  tgtLang: fr
+  langDescription: English to French
+  defaultPriority: 5
+  maxSegmentsPerBatch: 30
+  maxConcurrentBatches: 2
+gatewayServer:
+  host: 0.0.0.0
+  port: 10000
+translationEngineServer:
+  host: 0.0.0.0
+  port: 8989
+segmenterServer:
+  host: 0.0.0.0
+  port: 5000
+  useWhiteSegmenter: true
+testCorpus:
+  src: translation_engine_fake/test_corpus_src.txt
+  tgt: translation_engine_fake/test_corpus_tgt.txt
+fakeEngineVersion: 0.0.1
+nteuGatewayVersion: 0.0.1
+docker_commands: []
