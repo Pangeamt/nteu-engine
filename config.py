@@ -27,7 +27,6 @@ command=sh -c 'python3.7 /launch_nteu_gateway.py && kill 1'
         commands = ""
         for command in self._config["docker_commands"]:
             commands += command + "\n"
-        engine_fake_version = self._config["fakeEngineVersion"]
         gateway_version = self._config["nteuGatewayVersion"]
         return f"""
 FROM ubuntu:18.04
@@ -60,7 +59,6 @@ COPY requirements.txt /home/requirements.txt
 RUN python3.7 -m pip install pip
 RUN python3.7 -m pip install -r /home/requirements.txt
 
-RUN python3.7 -m pip install https://github.com/Pangeamt/nteu-translation-engine-fake/archive/{engine_fake_version}.tar.gz
 RUN python3.7 -m pip install https://github.com/Pangeamt/nteu_gateway/archive/{gateway_version}.tar.gz
 RUN git clone https://github.com/Pangeamt/nteu_ui
 
@@ -68,12 +66,9 @@ RUN mv /nteu_ui/ui /
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-COPY launch_engine.py /launch_engine.py
 COPY launch_nteu_gateway.py /launch_nteu_gateway.py
 COPY config.ru config.ru
 COPY config.yml /config.yml
-
-#RUN chmod +x /*
 
 {commands}
 
