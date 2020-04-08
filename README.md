@@ -13,6 +13,8 @@ In order to inject your translation model inside the nteu gateway you should mod
 
 - `launch_nteu_gateway.py` the `translate` function to connect with your translation model using its endpoints and return the list of translations.
 
+- You can also replace the texts in the folder `test_texts` to do a bleu evaluation with a get endpoint in `/test`
+
 
 ### Building and running the docker image
 
