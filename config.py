@@ -27,6 +27,14 @@ command=sh -c 'python3.7 /launch_nteu_gateway.py && kill 1'
         commands = ""
         for command in self._config["docker_commands"]:
             commands += command + "\n"
+        files_to_copy = ""
+        if "testCorpus" in self._config:
+            src = self._config["testCorpus"]["src"]
+            tgt = self._config["testCorpus"]["tgt"]
+            files_to_copy += (
+                f"COPY {src} /test_files/src.txt\n"
+                + f"COPY {tgt} /test_files/tgt.txt\n"
+            )
         gateway_version = self._config["nteuGatewayVersion"]
         return f"""
 FROM ubuntu:18.04
@@ -65,6 +73,8 @@ RUN git clone https://github.com/Pangeamt/nteu_ui
 RUN mv /nteu_ui/ui /
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+{files_to_copy}
 
 COPY launch_nteu_gateway.py /launch_nteu_gateway.py
 COPY config.ru config.ru
