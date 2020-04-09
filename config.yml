@@ -10,8 +10,10 @@ gatewayServer:
   host: 0.0.0.0
   port: 10000
 translationEngineServer:
-  host: 0.0.0.0
-  port: 8989
+  startCmd: python3.7 /launch_engine.py
+  installDockerCmds:
+    - COPY launch_engine.py /launch_engine.py
+    - RUN python3.7 -m pip install https://github.com/Pangeamt/nteu-translation-engine-fake/archive/0.0.2.tar.gz
 segmenterServer:
   host: 0.0.0.0
   port: 5000
@@ -20,6 +22,3 @@ testCorpus:
   src: test_texts/src.txt
   tgt: test_texts/tgt.txt
 nteuGatewayVersion: 0.0.3
-docker_commands:
-  - COPY launch_engine.py /launch_engine.py
-  - RUN python3.7 -m pip install https://github.com/Pangeamt/nteu-translation-engine-fake/archive/0.0.1.tar.gz

@@ -8,10 +8,7 @@ from nteu_gateway.translation_engine_adapter_base import (
 
 class FakeTranslationEngineAdapter(TranslationEngineAdapterBase):
     async def translate(self, texts: List[str], config: Dict) -> List[str]:
-        host = config["translationEngineServer"]["host"]
-        port = config["translationEngineServer"]["port"]
-
-        url = f"http://{host}:{port}/mytranslation"
+        url = "http://0.0.0.0:5019/mytranslation"
         params = {
             "texts": texts
         }

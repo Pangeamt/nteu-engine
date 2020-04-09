@@ -9,12 +9,13 @@ class Config:
     def seg_template(self):
         seg_host = self._config["segmenterServer"]["host"]
         seg_port = self._config["segmenterServer"]["port"]
+        startCmd = self._config["translationEngineServer"]["startCmd"]
         return f"""
 [supervisord]
 nodaemon=true
 
 [program:engine]
-command=sh -c 'python3.7 /launch_engine.py && kill 1'
+command=sh -c '{startCmd} && kill 1'
 
 [program:segmenter]
 command=sh -c 'rackup --host {seg_host} -p {seg_port} && kill 1'
@@ -25,7 +26,8 @@ command=sh -c 'python3.7 /launch_nteu_gateway.py && kill 1'
 
     def docker_template(self):
         commands = ""
-        for command in self._config["docker_commands"]:
+        cmd_list = self._config["translationEngineServer"]["installDockerCmds"]
+        for command in cmd_list:
             commands += command + "\n"
         files_to_copy = ""
         if "testCorpus" in self._config:
